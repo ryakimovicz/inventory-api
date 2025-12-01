@@ -17,11 +17,23 @@ namespace Inventory.API.Controllers
             _context = context;
         }
 
-        // GET: api/products
+        // GET: api/products?search=lap
+        // Agregamos el parámetro opcional 'search' con [FromQuery]
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Product>>> GetProducts()
+        public async Task<ActionResult<IEnumerable<Product>>> GetProducts([FromQuery] string? search)
         {
-            return await _context.Products.ToListAsync();
+            // 1. Convertimos la tabla en una consulta "pendiente" (IQueryable)
+            var query = _context.Products.AsQueryable();
+
+            // 2. Si el usuario escribió algo en el buscador, filtramos
+            if (!string.IsNullOrWhiteSpace(search))
+            {
+                // Convertimos ambos lados a minúsculas para hacer la búsqueda Case-Insensitive
+                query = query.Where(p => p.Name.ToLower().Contains(search.ToLower()));
+            }
+
+            // 3. Ejecutamos la consulta final y retornamos la lista filtrada
+            return await query.ToListAsync();
         }
 
         // GET: api/products/5
