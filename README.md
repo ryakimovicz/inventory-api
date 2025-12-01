@@ -40,6 +40,18 @@ Inventory.API/
 └── Program.cs         # Configuración de servicios y pipeline HTTP
 ```
 
+## 📸 Demostración
+
+La API incluye documentación interactiva con Swagger UI, permitiendo probar los endpoints directamente desde el navegador.
+
+### 1. Búsqueda de Productos (Filtro)
+Ejemplo consultando `/api/Products?search=laptop`. El sistema filtra y encuentra coincidencias sin importar mayúsculas/minúsculas.
+![Búsqueda Swagger](img/swagger_search_demo.png)
+
+### 2. Listado General
+Ejemplo de petición `GET` estándar recuperando todo el inventario disponible.
+![Demo General](img/swagger_demo.png)
+
 ## ⚙️ Instalación y Ejecución
 
 Sigue estos pasos para correr el proyecto en tu entorno local:
