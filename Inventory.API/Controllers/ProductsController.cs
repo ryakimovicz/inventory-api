@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Inventory.API.Data;
 using Inventory.API.Models;
+using Inventory.API.DTOs;
 
 namespace Inventory.API.Controllers
 {
@@ -39,8 +40,17 @@ namespace Inventory.API.Controllers
 
         // POST: api/products
         [HttpPost]
-        public async Task<ActionResult<Product>> CreateProduct(Product product)
+        public async Task<ActionResult<Product>> CreateProduct(CreateProductDto productDto)
         {
+            var product = new Product
+            {
+                Name = productDto.Name,
+                Description = productDto.Description,
+                Price = productDto.Price,
+                Stock = productDto.Stock,
+                CreatedAt = DateTime.UtcNow
+            };
+
             _context.Products.Add(product);
             await _context.SaveChangesAsync();
 
